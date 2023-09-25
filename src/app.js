@@ -26,7 +26,14 @@ app.get("/products/:id", async (req, res) => {
   const productos = await manager.getProduct();
   let id = req.params.id;
   let filtrado = productos.find((p) => p.id == id);
-  res.send(filtrado);
+  if (filtrado){
+    res.send(filtrado);
+  }
+  else{
+    res.send({"error":"error"});
+  }
+
+  
 });
 
 app.listen(8080, () => console.log("listening on port 8080"));
