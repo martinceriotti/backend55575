@@ -9,24 +9,6 @@
 		"stock": 25
 	},
 	{
-		"id": 1,
-		"title": "Remera",
-		"descripcion": "Remera Caballero",
-		"price": 110,
-		"thumbnail": "http://urlropa1.jpg",
-		"code": "AA001",
-		"stock": 12
-	},
-	{
-		"id": 2,
-		"title": "Remera Small",
-		"descripcion": "Remera Niño",
-		"price": 50,
-		"thumbnail": "http://urlropa2.jpg",
-		"code": "AA001",
-		"stock": 10
-	},
-	{
 		"id": 3,
 		"title": "Pantalon",
 		"descripcion": "Pantalo Caballero",
@@ -97,5 +79,103 @@
 		"thumbnail": "http://urlropa3.jpg",
 		"code": "BB001",
 		"stock": 5
+	},
+	{
+		"id": 12,
+		"title": "RemeraAAA",
+		"descripcion": "Remera CXXX Caballero",
+		"price": 110,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "A1001",
+		"stock": 12
+	},
+	{
+		"id": 13,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 2000,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "A1002",
+		"stock": 12
+	},
+	{
+		"id": 14,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 2000,
+		"thumbnail": [
+			"http://urlropa1.jpg",
+			"http://urlropa2.jpg"
+		],
+		"code": "A10A2",
+		"stock": 12,
+		"status": 1,
+		"category": "Categoria Z"
+	},
+	{
+		"id": 15,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 10,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "A10AAA2",
+		"stock": 12,
+		"bool": 1,
+		"category": "a"
+	},
+	{
+		"id": 16,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 10,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "A10AAAA2",
+		"stock": 12,
+		"bool": 1,
+		"category": "a"
+	},
+	{
+		"id": 17,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 10,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "A10AAAaA2",
+		"stock": 12,
+		"bool": 1,
+		"category": "a"
+	},
+	{
+		"id": 18,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 10,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "A10AAAAaA2",
+		"stock": 12,
+		"bool": 1,
+		"category": "a"
+	},
+	{
+		"id": 19,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 10,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "A10AAAAAaA2",
+		"stock": 12,
+		"bool": 1,
+		"category": "a"
+	},
+	{
+		"id": 20,
+		"title": "Panta 12",
+		"descripcion": "Panta ZX",
+		"price": 10,
+		"thumbnail": "http://urlropa1.jpg",
+		"code": "vA10AAAAAaA2",
+		"stock": 12,
+		"bool": 1,
+		"category": "a"
 	}
 ]

@@ -4,6 +4,7 @@ class ProductManager {
   constructor(path) {
     this.products = [];
     this.path = path;
+    this.status = 1;
   }
 
   addProduct = async (product) => {
@@ -21,25 +22,30 @@ class ProductManager {
 
         } else {
           console.log(`Some fields are incompleted`);
+          return({"status":"error","error": "Some fields are incompleted"})
         }
       } else {
         console.log(`Product already in db. Code: , ${product.code}`);
+        return({"status":"error","error": `Product already in db. Code: , ${product.code}`})
       }
     } catch (error) {
       console.log(error);
     }
     function validateFields(product) {
       if (
-        product.title != "" &&
-        product.description != "" &&
-        product.price != 0 &&
-        product.thumbnail != "" &&
-        product.code != "" &&
-        product.stock != 0
+        product.title == "" ||
+        product.description == "" ||
+        product.price == 0 ||
+        product.thumbnail == "" ||
+        product.code == "" ||
+        product.stock == 0 ||
+        product.category == ""
       ) {
-        return true;
-      } else {
         return false;
+     
+      } else {
+        return true;
+        
       }
     }
   };
@@ -65,13 +71,14 @@ class ProductManager {
   updateProduct = async (id, dataToUpdate) => {
     const products = await this.getProduct();
     const updatePrd = products.find((e) => e.id === id);
-    const i = products.findIndex((e) => e.id === id);
     updatePrd.title = dataToUpdate.title;
     updatePrd.description = dataToUpdate.description;
     updatePrd.thumbnail = dataToUpdate.thumbnail;
     updatePrd.price = dataToUpdate.price;
     updatePrd.code = dataToUpdate.code;
     updatePrd.stock = dataToUpdate.stock;
+    updatePrd.category = dataToUpdate.category;
+    updatePrd.status = dataToUpdate.status;
     products.slice(id, 1, updatePrd);
 
     await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))

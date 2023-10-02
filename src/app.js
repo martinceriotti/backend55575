@@ -1,39 +1,13 @@
 import express from "express";
-import ProductManager from "./managers/ProductManager.js";
+import bodyParser from "body-parser";
+import routerProducts from "./routes/products.router.js"
+import routerCarts from "./routes/carts.router.js"
 
 const app = express();
 
-const manager = new ProductManager("./src/files/products.json");
+app.use('/api/products', routerProducts);
+app.use('/api/carts', routerCarts)
 
-app.get("/products", async (req, res) => {
-  const productos = await manager.getProduct();
-  res.send(productos);
-});
-
-app.get("/products/querys", async (req, res) => {
-  const productos = await manager.getProduct();
-  let limite = req.query.limite;
-  console.log(limite);
-  if (limite) {
-    const productosLimitados = productos.slice(0, limite);
-    res.send(productosLimitados);
-  } else {
-    res.send(productos);
-  }
-});
-
-app.get("/products/:id", async (req, res) => {
-  const productos = await manager.getProduct();
-  let id = req.params.id;
-  let filtrado = productos.find((p) => p.id == id);
-  if (filtrado){
-    res.send(filtrado);
-  }
-  else{
-    res.send({"error":"error"});
-  }
-
-  
-});
-
+app.use(bodyParser.json());
+app.use(express.urlencoded({extended:true}));
 app.listen(8080, () => console.log("listening on port 8080"));
