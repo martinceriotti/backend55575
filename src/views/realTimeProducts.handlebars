@@ -1,25 +1,6 @@
-
-<table class="table table-striped">
-      <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">TITLE</th>
-      <th scope="col">DESCRIPTION</th>
-      <th scope="col">PRICE</th>
-      <th scope="col">CODE</th>
-      <th scope="col">STOCK</th>
-    </tr>
-  </thead>
-   <tbody>
-  {{#each prods}}
-    <tr>
-      <td>{{this.id}}</td>
-      <td>{{this.title}}</td>
-      <td>{{this.descripcion}}</td>
-      <td>{{this.price}}</td>
-      <td>{{this.code}}</td>
-      <td>{{this.stock}}</td>
-    </tr>
-  {{/each}}
-</tbody>
-</table>
+<div>
+  <p id="newProducts"></p>
+  
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

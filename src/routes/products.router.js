@@ -2,7 +2,8 @@ import { Router } from "express";
 import ProductManager from "../managers/ProductManager.js";
 import { check, validationResult } from "express-validator";
 import bodyParser from "body-parser";
-
+import productsModel from "../models/model.product.js";
+// import { io } from "socket.io-client";
 const routerProducts = Router();
 const manager = new ProductManager("../src/files/products.json");
 
@@ -20,8 +21,14 @@ routerProducts.use(function (err, req, res, callback) {
 });
 
 routerProducts.get("/", async (req, res) => {
-  const productos = await manager.getProduct();
-  res.send(productos);
+  try {
+    const products = await productsModel.find()
+    res.send({status: 'sucess', payload : products})
+   
+  } catch (error) {
+    res.status(500).send({error: error.message})
+    
+  }
 });
 
 routerProducts.get("/querys", async (req, res) => {
@@ -75,13 +82,17 @@ routerProducts.post(
         .status(400)
         .send({ status: "error", error: "incomplete values" });
     }
-    await manager.addProduct(product).then((e) => {
-      if (!e.status) {
-        res.send({ status: "sucess", message: "Product Created." });
-      } else {
-        res.send({ status: `${e.status}`, message: `${e.error}` });
-      }
-    });
+    try {
+      const result = await productsModel.create(product)
+      
+      var io = req.app.get('socketio');
+      const products = await productsModel.find()
+      io.emit("messageProduct", products)
+
+      res.status(201).send({status: 'success', payload: result}) 
+    } catch (error) {
+      res.status(500).send({error: error.message})
+    }
   }
 );
 
@@ -117,15 +128,21 @@ routerProducts.put(
     await manager.updateProduct(product.id, product).then((e) => {
       res.send({ status: "sucess", message: "Product Updated ." });
     });
+    var io = req.app.get('socketio');
+      const products = await productsModel.find()
+      io.emit("messageProduct", products)
   }
 );
 
 routerProducts.delete("/:id", async (req, res) => {
-  let id = Number.parseInt(req.params.id);
-
+  let id = req.params.id;
+  var io = req.app.get('socketio');
+  
   await manager.deleteProduct(id).then((e) => {
     res.send({ status: "sucess", message: "Product Deleted ." });
   });
+  const products = await productsModel.find()
+  io.emit("messageProduct", products)
 });
 
 export default routerProducts;

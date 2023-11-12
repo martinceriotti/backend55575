@@ -1,4 +1,5 @@
-import fs from 'fs';
+import fs from "fs";
+import productsModel from "../models/model.product.js";
 
 class ProductManager {
   constructor(path) {
@@ -9,44 +10,10 @@ class ProductManager {
 
   addProduct = async (product) => {
     try {
-      const products = await this.getProduct();
-
-      if (products.some((e) => e.code === product.code) === false) {
-        if (validateFields(product)) {
-          product.id = products.length + 1;
-          products.push(product);
-
-          //una vez hecho el procesamiento hay que guardar en el archivo.
-          await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
-          return product;
-
-        } else {
-          console.log(`Some fields are incompleted`);
-          return({"status":"error","error": "Some fields are incompleted"})
-        }
-      } else {
-        console.log(`Product already in db. Code: , ${product.code}`);
-        return({"status":"error","error": `Product already in db. Code: , ${product.code}`})
-      }
+      const result = await productsModel.create(product); //insrt 1
+      return result;
     } catch (error) {
-      console.log(error);
-    }
-    function validateFields(product) {
-      if (
-        product.title == "" ||
-        product.description == "" ||
-        product.price == 0 ||
-        product.thumbnail == "" ||
-        product.code == "" ||
-        product.stock == 0 ||
-        product.category == ""
-      ) {
-        return false;
-     
-      } else {
-        return true;
-        
-      }
+      return error;
     }
   };
   //Obtener los productos del archivo products.json.
@@ -67,7 +34,7 @@ class ProductManager {
   getProductById = async (id) => {
     const products = await this.getProduct();
     return products.find((e) => e.id === id) ?? [];
-  }
+  };
   updateProduct = async (id, dataToUpdate) => {
     const products = await this.getProduct();
     const updatePrd = products.find((e) => e.id === id);
@@ -81,15 +48,20 @@ class ProductManager {
     updatePrd.status = dataToUpdate.status;
     products.slice(id, 1, updatePrd);
 
-    await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
-
-  }
-  deleteProduct = async(id) => {
-    const products = await this.getProduct();
-    const i = products.findIndex((e) => e.id === id);
-    products.splice(i, 1);
-    await fs.promises.writeFile(this.path, JSON.stringify(products, null, '\t'))
-  }
+    await fs.promises.writeFile(
+      this.path,
+      JSON.stringify(products, null, "\t")
+    );
+  };
+  deleteProduct = async (id) => {
+    
+    try {
+      let result = await productsModel.deleteOne({ _id: id });
+      console.log(result);
+    } catch (error) {
+      return(error)
+    }
+  };
 }
 
 export default ProductManager;

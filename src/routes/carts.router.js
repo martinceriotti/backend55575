@@ -1,7 +1,7 @@
 import { Router } from "express";
 import CartManager from "../managers/CartManager.js";
-import { check, validationResult } from "express-validator";
 import bodyParser from "body-parser";
+
 
 const routerCarts = Router();
 const cart = new CartManager("../src/files/carts.json");
