@@ -6,6 +6,7 @@ form.addEventListener("submit", (e) => {
   const obj = {};
 
   data.forEach((value, key) => (obj[key] = value));
+  console.log(data);
   fetch("/api/sessions/login", {
     method: "POST",
     body: JSON.stringify(obj),
@@ -14,7 +15,7 @@ form.addEventListener("submit", (e) => {
     },
   }).then((result) => {
     if (result.status === 200) {
-      window.location.replace("/");
+      window.location.replace("/api/views/profile");
     }
   });
 });

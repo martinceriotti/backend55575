@@ -30,12 +30,5 @@ router.post("/login", getUsersByEmailPassword)
 //   }
 // });
 
-router.get("/logout", (req, res) => {
-  req.session.destroy((error) => {
-    if (error)
-      return res.status(500).send({ status: "error", message: error.message });
-    res.redirect("/");
-  });
-});
 
 export default router;

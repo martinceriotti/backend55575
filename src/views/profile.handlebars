@@ -1,14 +1,7 @@
 <div>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <label>Email</label>
-        <input name="email">
-        <br/>
-        <label>Contraseña</label>
-        <input name="password" type="password">
-        <br/>
-        <input type="submit">
-    </form>
-    <p>No estas registrado? <a href="/register">Registrate aquí</a></p>
+    <h1>Tu perfil </h1>
+    <p>{{user.name}}</p>
+    <p>{{user.email}}</p>
+    <p>{{user.age}}</p>
+    <a href="/api/views/logout"><button>Salir</button></a>
 </div>
-<script src="/js/login.js"></script>

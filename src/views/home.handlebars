@@ -1,6 +1,7 @@
-
+<p>Bienvenido {{user.name}}</p>
+<br>
 <table class="table table-striped">
-      <thead class="thead-dark">
+  <thead class="thead-dark">
     <tr>
       <th scope="col">#</th>
       <th scope="col">TITLE</th>
@@ -13,7 +14,7 @@
    <tbody>
   {{#each prods}}
     <tr>
-      <td>{{this.id}}</td>
+      <td>{{this._id}}</td>
       <td>{{this.title}}</td>
       <td>{{this.descripcion}}</td>
       <td>{{this.price}}</td>

@@ -21,12 +21,21 @@ const getUsersById = async (req, res) => {
 
 const getUsersByEmailPassword = async (req, res) => {
   try {
-    const {email, password} = req.body;
-    const result = await userService.getUsersByEmailPassword(email, password);
-    if (!result) {
-      return res.status(500).send({ status: "error", message: 'user not found' });
+    const { email, password } = req.body;
+    const user = await userService.getUsersByEmailPassword(email, password);
+    if (!user) {
+      return res
+        .status(500)
+        .send({ status: "error", message: "user not found" });
     }
-    res.send({ status: "success", result });
+    console.log(user);
+    req.session.user = {
+      name: `${user.first_name} ${user.last_name}`,
+      email: user.email,
+      age: user.age,
+    };
+
+    return res.send({ status: "success", message: "login success" });
   } catch (error) {
     res.status(500).send({ status: "error", message: error.message });
   }
@@ -41,19 +50,20 @@ const createUser = async (req, res) => {
         .send({ status: "error", message: "incomplete values" });
     }
     const exists = await userService.getUsersByEmail(email);
-   
+
     if (exists) {
       return res
         .status(400)
         .send({ status: "error", message: "User already exists" });
     }
     const user = {
-      "first_name" : first_name,
-      "last_name" : last_name,
-      "email" : email,
-      "age" : age,
-      "password" : password
-    }
+      first_name: first_name,
+      last_name: last_name,
+      email: email,
+      age: age,
+      password: password,
+      role: "usuario"
+    };
     const result = await userService.createUser(user);
     res.status(201).send({ status: "success", result });
   } catch (error) {
