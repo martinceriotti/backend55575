@@ -4,11 +4,7 @@ form.addEventListener('submit', e => {
     e.preventDefault();
     const data = new FormData(form);
     const obj = {};
-    // {
-    //     first_name: "asdasd",
-    //     last_name: "asdasd",
-    //     age: 123
-    // }
+ 
     data.forEach((value, key) => obj[key] = value);
     fetch('/api/sessions/register', {
         method: 'POST',

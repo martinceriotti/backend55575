@@ -1,13 +1,19 @@
 import mongoose from "mongoose";
-
+import mongoosePaginate from 'mongoose-paginate-v2';
 const cartsCollection = 'carts';
 
-//definir el esquema de nuestro documento, atributos del usuario
-
 const cartSchema = new mongoose.Schema({
-	products: Array
+	products: {
+        type: Array,
+        default: []
+    }
+
 })
 
-// Parte funcionalde modelo.
-
+cartSchema.plugin(mongoosePaginate);
+cartSchema.pre("find", function() {
+	this.populate('products.product');
+})
 export const cartModel = mongoose.model(cartsCollection, cartSchema)
+
+// friends: [{ type : ObjectId, ref: 'User' }],

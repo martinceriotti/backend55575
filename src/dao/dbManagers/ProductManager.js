@@ -40,11 +40,11 @@ class ProductManager {
     updatePrd.category = dataToUpdate.category;
     updatePrd.status = dataToUpdate.status;
     products.slice(id, 1, updatePrd);
-
-    await fs.promises.writeFile(
-      this.path,
-      JSON.stringify(products, null, "\t")
-    );
+    const result =  await productsModel.updateOne()
+    // await fs.promises.writeFile(
+    //   this.path,
+    //   JSON.stringify(products, null, "\t")
+    // );
   };
   deleteProduct = async (id) => {
     try {
