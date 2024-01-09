@@ -4,8 +4,8 @@ export default class ProductsRepository {
     constructor() {
         this.dao = new ProductsDao();
     }
-    getProducts = async () => {
-        const result = await this.dao.getProducts();
+    getProducts = async (page, limit, ascdesc, query) => {
+        const result = await this.dao.getProducts(page, limit, ascdesc, query);
         return result;
     }
     getProductById = async (id) => {

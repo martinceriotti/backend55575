@@ -1,9 +1,10 @@
 import { Router } from "express";
-import {getCarts, getCartById, createCart, updateCart} from '../controllers/carts.controller.js'
+import toAsyncRouter from 'async-express-decorator';
+import {getCarts, getCartById, createCart, updateCart, deleteCartProduct, deleteCartProductsArray} from '../controllers/carts.controller.js'
 import bodyParser from "body-parser";
 
 
-const router = Router();
+const router =  toAsyncRouter(Router());
 
 // const cart = new CartManager("../src/files/carts.json");
 
@@ -22,40 +23,11 @@ router.use(function (err, req, res, callback) {
 });
 
 router.get('/', getCarts);
+router.delete('/:cid/products/:pid', deleteCartProduct); //elimina del carrito el producto
+router.delete('/:cid', deleteCartProductsArray); //elimina todos los productos del carrito
 router.post('/', createCart);
-router.put('/:id', updateCart);
-router.get('/:id', getCartById);
-
-// routerCarts.get("/", async (req, res) => {
-//   let cartx = await cart.getCarts();
-//   if (cartx) {
-//     res.send(cartx);
-//   }
-// });
-
-// routerCarts.get("/:cid", async (req, res) => {
-//   let cartfound = await cart.getCartById(req.params.cid);
-//   res.send(cartfound);
-// });
-
-// routerCarts.post("/", async (req, res) => {
-//   let carti = await cart.addCart().then((e) => {
-//     res.send({ status: "sucess", message: "Cart Created ." });
-//   });;
-//   res.send(carti);
-// });
-
-// routerCarts.post("/:cid/product/:pid", async (req, res) => {
-//   let cid = req.params.cid
-//   let pid = req.params.pid
-//   let qt = 1
-
-//   await cart.updateCartProducts(cid, pid, qt).then((e) => {
-//     res.send({ status: "sucess", message: "Cart Updated ." });
-//   }).catch((e) => {
-//     res.send({ status: "error", message: "Update Cancelled ." });
-//   });
-     
-// });
-
+router.put('/:cid', updateCart); //actualiza el arreglo completo de productos
+router.put('/:cid/products/:pid', updateCart); //solo cant del producto seleccionado
+router.get('/:cid', getCartById);
+ 
 export default router;

@@ -1,10 +1,11 @@
 import { Router } from "express";
+import toAsyncRouter from 'async-express-decorator';
 import bodyParser from "body-parser";
 import {getMessageById, getMessages, createMessage, updateMessage} from '../controllers/messages.controller.js'
 // import messageModel from "../dao/dbManagers/models/model.messages.js";
 // import { accessRolesEnum, passportStrategiesEnum } from '../config/emuns.js';
 
-const router = Router();
+const router =  toAsyncRouter(Router());
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));

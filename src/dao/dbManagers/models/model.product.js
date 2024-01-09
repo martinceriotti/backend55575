@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import mongoosePaginate from 'mongoose-paginate-v2';
 const productsCollection = "products";
 
 //definir el esquema de nuestro documento, atributos del usuario
@@ -13,6 +13,6 @@ const productSchema = new mongoose.Schema({
   stock: Number,
 });
 
-// Parte funcionalde modelo.
+productSchema.plugin(mongoosePaginate);
 const productsModel = mongoose.model(productsCollection, productSchema);
 export {productsModel}

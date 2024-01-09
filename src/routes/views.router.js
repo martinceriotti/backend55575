@@ -1,8 +1,10 @@
+import {getCartById} from '../controllers/carts.controller.js'
 import { Router } from "express";
-const router = Router();
+import toAsyncRouter from 'async-express-decorator';
+
+const router =  toAsyncRouter(Router());
 
 const publicAccess = (req, res, next) => {
-  
   if (req.session?.user) return res.redirect("/api/views/profile");
   next();
 };
@@ -20,7 +22,6 @@ router.get("/login", publicAccess, (req, res) => {
 });
 
 router.get("/profile", privateAccess, (req, res) => {
-  
   res.render("profile", {
     user: req.session.user,
   });
@@ -34,40 +35,82 @@ router.get("/logout", (req, res) => {
   });
 });
 
-router.get("/", async (req, res) => {
-  let prods = [];
+// router.get("/", async (req, res) => {
+//   let prods = [];
 
-  async function fetchProductsJSON() {
-    let method = req.method;
-    let hostname = req.hostname;
-    let protocol = req.protocol;
+//   async function fetchProductsJSON() {
+//     let method = req.method;
+//     let hostname = req.hostname;
+//     let protocol = req.protocol;
 
-    const response = await fetch(
-      `${protocol}://${hostname}:8080/api/products/`
-    );
-    const prods = await response.json();
-    console.log(typeof(prods));
-    return prods;
-  }
-  fetchProductsJSON().then((productos) => {
-    const prods =  productos.result;
-    console.log(prods);
-    const user = req.session.user
-    res.render("home", {prods, user});
+//     const response = await fetch(
+//       `${protocol}://${hostname}:8080/api/products/`
+//     );
+//     const prods = await response.json();
+//     console.log(typeof(prods));
+//     return prods;
+//   }
+//   fetchProductsJSON().then((productos) => {
+//     const prods =  productos.result;
+//     console.log(prods);
+//     const user = req.session.user
+//     res.render("home", {prods, user});
+//   });
+// });
+router.get("/carts/:cid", getCartById  => {
+  fetch(getCartById).then(function(response) {
+    return response.text();
+  }).then(function(text) {
+    console.log(text.substring(0, 30));
+  });
+}) 
+router.get("/products", async (req, res) => {
+  let query = req.query
+  query.page = !query.page ? 1 : query.page ;
+  let uri = "http://localhost:8080/api/products/?page=" + query.page;
+  let productos = await fetch(uri, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+    mode: "cors",
+  }).then((result) => result.json());
+
+  let prods = productos.result.payload;
+  let hasPrevPage = productos.result.hasPrevPage;
+  let hasNextPage = productos.result.hasNextPage;
+  let nextPage = productos.result.nextPage;
+  let prevPage = productos.result.prevPage;
+  let totalPages = productos.result.totalPages;
+  let totalDocs = productos.result.totalDocs;
+  let user = req.session.user;
+  console.log(uri);
+  console.log(nextPage);
+  res.render("home", {
+    prods,
+    user,
+    hasPrevPage,
+    hasNextPage,
+    prevPage,
+    nextPage,
+    totalPages,
+    totalDocs,
   });
 });
+
+ 
 
 router.get("/realtimeproducts", (req, res) => {
   res.render("realTimeProducts");
 });
 
 function auth(req, res, next) {
-  if(req.session?.user.email === 'adminCoder@coder.com' && req.session?.user.role === 'admin') {
-      return next();
+  if (
+    req.session?.user.email === "adminCoder@coder.com" &&
+    req.session?.user.role === "admin"
+  ) {
+    return next();
   }
-//adminCod3r123
-  return res.status(401).send('Error de validación de permisos');
+  //adminCod3r123
+  return res.status(401).send("Error de validación de permisos");
 }
 
 export default router;
-

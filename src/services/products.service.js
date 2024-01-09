@@ -2,8 +2,8 @@ import ProductsRepository from "../repositories/products.repository.js";
 
 const producsRepository = new ProductsRepository();
 
-const getProducts = async() =>{
-    const result = await producsRepository.getProducts();
+const getProducts = async(page, limit, ascdesc, query) =>{
+    const result = await producsRepository.getProducts(page, limit, ascdesc, query);
     return result;
     //logica del negocio
 }

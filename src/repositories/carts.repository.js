@@ -20,4 +20,12 @@ export default class CartsRepository{
         const result = this.dao.updateCart(id, cart);
         return result;
     }
+    deleteCartProductsArray = async (cid) => {
+        const result = this.dao.deleteCartProductsArray(cid);
+        return result;
+      };
+    deleteCartProduct = async (cid, pid) => {
+        const result = this.dao.deleteCartProduct(cid, pid);
+        return result;
+      };      
 } 

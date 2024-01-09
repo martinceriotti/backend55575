@@ -15,6 +15,7 @@ import initializePassport from './config/passport.js';
 import session from 'express-session'
 import MongoStore from 'connect-mongo';
 import config from './config/config.js';
+import errorHandler from './middlewares/errors/index.js';
 
 const app = express();
 initializePassport();
@@ -43,7 +44,7 @@ app.use("/api/carts", routerCarts);
 app.use("/api/messages", routerMessages);
 app.use("/api/views", routerViews);
 app.use('/api/sessions', routerSessions);
-
+app.use(errorHandler);
 
 
 

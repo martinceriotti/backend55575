@@ -1,9 +1,10 @@
 import { Router } from "express";
-import {getProducts, getProductById, createProduct, updateProduct} from '../controllers/products.controller.js'
+import toAsyncRouter from 'async-express-decorator';
+import {getProducts, getProductById, createProduct, updateProduct, mockingProducts} from '../controllers/products.controller.js'
 import { check, validationResult } from "express-validator";
 import bodyParser from "body-parser";
 import { io } from "socket.io-client";
-const router = Router();
+const router =  toAsyncRouter(Router());
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -22,5 +23,6 @@ router.get('/', getProducts);
 router.get('/:id', getProductById);
 router.put('/:id', updateProduct);
 router.post('/', createProduct);
+router.get('/test/mockingProducts', mockingProducts);
 
 export default router;
