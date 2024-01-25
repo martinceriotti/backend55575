@@ -16,16 +16,14 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo';
 import config from './config/config.js';
 import errorHandler from './middlewares/errors/index.js';
+import { addLogger } from "./middlewares/logger.js";
 
 const app = express();
 initializePassport();
-
 app.use(cors());
-app.use(passport.initialize());
 app.engine("handlebars", handlebars.engine());
 app.set("views", `${__dirname}\\views`);
 app.set("view engine", "handlebars");
-
 app.use(bodyParser.json());
 app.use(express.static(`${__dirname}\\public`));
 app.use(express.urlencoded({ extended: true }));
@@ -34,19 +32,18 @@ app.use(session({
       mongoUrl : config.mongoUrl,
       ttl: 3600
   }),
-  secret: 'numark123A',
+  secret: config.lakey,
   resave: true, 
   saveUninitialized: true,
 }));
-
+app.use(addLogger);
 app.use("/api/products", routerProducts);
 app.use("/api/carts", routerCarts);
 app.use("/api/messages", routerMessages);
 app.use("/api/views", routerViews);
 app.use('/api/sessions', routerSessions);
 app.use(errorHandler);
-
-
+app.use(passport.initialize());
 
 const httpServer = app.listen(8080, () =>
   console.log("listening on port 8080")
