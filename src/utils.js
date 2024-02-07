@@ -1,9 +1,14 @@
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import path from 'path';
 import { fakerES as faker } from "@faker-js/faker";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+// const __mainDirname = path.join(__dirname, '..', '..'); 
+const __mainDirname = path.join(__dirname, '..'); 
+
+
 
 export const generateProducts = () => {
   let qtProducts = 100;
@@ -23,4 +28,5 @@ export const generateProducts = () => {
 
   return products;
 };
-export default __dirname;
+export  {__dirname, __mainDirname} ;
+

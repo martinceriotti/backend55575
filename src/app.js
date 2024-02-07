@@ -5,7 +5,7 @@ import routerProducts from "./routes/products.router.js";
 import routerCarts from "./routes/carts.router.js";
 import routerMessages from "./routes/messages.router.js";
 import handlebars from "express-handlebars";
-import __dirname from "./utils.js";
+import {__dirname, __mainDirname} from "./utils.js";
 import routerViews from "./routes/views.router.js";
 import routerSessions from "./routes/sessions.router.js";
 import { Server } from "socket.io";
@@ -17,9 +17,26 @@ import MongoStore from 'connect-mongo';
 import config from './config/config.js';
 import errorHandler from './middlewares/errors/index.js';
 import { addLogger } from "./middlewares/logger.js";
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
 
 const app = express();
 initializePassport();
+
+const swaggerOptions = {
+  definition: {
+      openapi: '3.0.1',
+      info: {
+          title: 'Ecommerce APP Documentation. By Martin Ceriotti.',
+          description: 'API about an ecommerce app. You will love it!'
+      }
+  },
+  apis: [`${__mainDirname}/docs/**/*.yaml`] 
+}
+console.log(`${__mainDirname}/docs/**/*.yaml`)
+const specs = swaggerJsdoc(swaggerOptions);
+
+app.use('/api/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 app.use(cors());
 app.engine("handlebars", handlebars.engine());
 app.set("views", `${__dirname}\\views`);
