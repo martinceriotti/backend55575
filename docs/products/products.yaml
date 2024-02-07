@@ -31,38 +31,36 @@ paths:
                   $ref: '#components/schemas/Product'
         "500":
           description: Internal server error.
-  /api/users/{uid}:
+  /api/products/{id}:
     get:
-      summary: Este servicio obtiene un solo usuario a partir de su uid (identificaro del usuario)
+      summary: This service lists a product of the ecommerce.
       tags:
         - Products
       parameters:
-        - name: uid
-          in: path
+        - in: path
+          name: id
           required: true
-          description: El id del usuario a buscar
+          description: Product id.
           schema:
             $type: String
       responses:
         "200":
-          description: El usuario fue obtenido correctamente de nuestra BDD
+          description: Product listed ok.
           content:
             application/json:
               schema:
                 $ref: '#components/schemas/Product'
         "500":
-          description: Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+          description: Server internal error.
     put:
-      summary: Este servicio actualiza el usuario a partir de su uid
+      summary: Updates the product.
       tags:
         - Products
-      security:
-        - bearerAuth: []
       parameters:
-        - name: uid
-          in: path
+        - in: path
+          name: id
           required: true
-          description: El id del usuario a actualizar
+          description: Product id.
           schema:
             $type: String
       requestBody:
@@ -70,14 +68,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#components/requestBodies/updateUser'
+              $ref: '#components/requestBodies/updateProduct'
       responses:
         "200":
-          description: El usuario fue actualizado correctamente
+          description: Product updated.
         "404":
-          description: El usuario no fue encontrado en BDD
+          description: Product not found.
         "500":
-          description:  Error interno del servidor, usualmente generado por una query defectuosa o fallo en la conexión
+          description: Internal server error.
 components:
   schemas:
     Product:
@@ -141,30 +139,34 @@ components:
         code: Xd9ofa
         stock: 10
   requestBodies:
-    updateUser:
+    updateProduct:
       type: Object
       properties:
-        first_name:
+        title:
           type: String
-          description: Nombre del usuario
-        last_name:
+          description: Product title.
+        descripcion:
           type: String
-          description: Apellido del usuario
-        email:
+          description: Product description.
+        price:
+          type: Number
+          description: Product Price.
+        thumbnail:
           type: String
-          description: Correo del usuario
-        password:
+          description: Product thumbnail.
+        code:
           type: String
-          description: Password del usuario
-        role:
-          type: String
-          description: Rol del usuario
+          description: Internal product code.
+        stock:
+          type: Number
+          description: Product Stock.
       example:
-        first_name: Coder
-        last_name: House
-        email: ch@coder.com
-        password: $%#ASD
-        role: admin
+        title: Shoes
+        description: Trainning Shoes from Japan.
+        price: 200
+        thumbnail: http://urlropa1.jpg
+        code: Xd9ofa
+        stock: 10
   securitySchemes:
     bearerAuth:
       type: http
