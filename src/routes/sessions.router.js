@@ -5,6 +5,7 @@ const router =  toAsyncRouter(Router());
 router.post("/register", createUser)
 router.post("/login", getUsersByEmailPassword)
 import toAsyncRouter from 'async-express-decorator';
+
 // router.post("/login", async (req, res) => {
 //   try {
 //     const { email, password } = req.body;
