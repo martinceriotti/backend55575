@@ -45,6 +45,10 @@ router.get("/logout", (req, res) => {
   });
 });
 
+router.get("/testview", (req, res) => {
+  console.log("llega");
+  res.render("testview")
+})
 // router.get("/", async (req, res) => {
 //   let prods = [];
 
