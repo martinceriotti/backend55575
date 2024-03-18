@@ -29,9 +29,9 @@ router.use(function (err, req, res, callback) {
   }
 });
 
-router.get('/',  getUsers);
-router.get('/:id',  getUsersById);
-router.post('/:id',   updateRoleUser);
-router.delete('/:id',  deleteUser);
+router.get('/', privateAccess, getUsers);
+router.get('/:id', privateAccess, getUsersById);
+router.post('/:id',  privateAccess, updateRoleUser);
+router.delete('/:id', adminAccess, deleteUser);
 
 export default router;
