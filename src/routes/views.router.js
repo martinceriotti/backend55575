@@ -21,7 +21,7 @@ router.get("/register", publicAccess, (req, res) => {
   res.render("register");
 });
 
-router.get("/login", publicAccess, (req, res) => {
+router.get("/login", (req, res) => {
   res.render("login");
 });
 
