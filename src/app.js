@@ -77,5 +77,6 @@ io.on("connection", (socket) => {
 });
 
 app.set("socketio", io);
- 
+console.log(__mainDirname)
+console.log(__dirname)
 
