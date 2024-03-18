@@ -40,10 +40,10 @@ const specs = swaggerJsdoc(swaggerOptions);
 app.use('/api/docs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 app.use(cors());
 app.engine("handlebars", handlebars.engine());
-app.set("views", `${__mainDirname}\views`);
+app.set("views", `${__mainDirname}/views`);
 app.set("view engine", "handlebars");
 app.use(bodyParser.json());
-app.use(express.static(`${__dirname}\public`));
+app.use(express.static(`${__dirname}/public`));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
   store: MongoStore.create({
