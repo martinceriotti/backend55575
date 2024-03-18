@@ -11,8 +11,8 @@ const privateAccess = (req, res, next) => {
 };
 
 const adminAccess = (req, res, next) => {
-  console.log(req.session )
-  if ( req.session?.user.role != "ADMIN" ) return res.redirect("/api/views/login");
+  if ( req.session?.user.role != "ADMIN" ) 
+    return res.redirect("/api/views/login");
   next();
 };
 

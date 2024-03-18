@@ -13,7 +13,8 @@ const privateAccess = (req, res, next) => {
   next();
 };
 const adminAccess = (req, res, next) => {
-  if (req.session?.user.role == 'ADMIN') return res.redirect("/api/views/login");
+  console.log(req.session?.user.role) 
+  if (req.session?.user.role != 'ADMIN') return res.redirect("/api/views/login");
   next();
 };
 
@@ -46,31 +47,9 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/testview", (req, res) => {
-  console.log("llega");
+  console.log(req.session?.user.role);
   res.render("testview")
 })
-// router.get("/", async (req, res) => {
-//   let prods = [];
-
-//   async function fetchProductsJSON() {
-//     let method = req.method;
-//     let hostname = req.hostname;
-//     let protocol = req.protocol;
-
-//     const response = await fetch(
-//       `${protocol}://${hostname}:8080/api/products/`
-//     );
-//     const prods = await response.json();
-//     console.log(typeof(prods));
-//     return prods;
-//   }
-//   fetchProductsJSON().then((productos) => {
-//     const prods =  productos.result;
-//     console.log(prods);
-//     const user = req.session.user
-//     res.render("home", {prods, user});
-//   });
-// });
 router.get("/carts/:cid", getCartById  => {
   fetch(getCartById).then(function(response) {
     return response.text();
