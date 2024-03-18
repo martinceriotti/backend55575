@@ -28,4 +28,13 @@ export default class UsersRepository{
         const result = this.dao.updateUser(id, user);
         return result;
     }
+    deleteUser = async (id) => {
+        const result = this.dao.deleteUser(id);
+        return result;
+    }
+    updateRoleUser = async (id, user) => {
+        const result = this.dao.updateRoleUser(id, user);
+        return result;
+    }
+    
 } 

@@ -33,12 +33,24 @@ const updateUser = async (id, user) => {
     return result;
 }
 
+const deleteUser = async (id) => {
+    const result = await usersRepository.deleteUser(id);
+    return result;
+}
+
+const updateRoleUser = async (id, user) => {
+    const result = await usersRepository.updateRoleUser(id, user);
+    return result;
+}
+
 export {
     getUsers,
     getUsersById,
     createUser,
     updateUser,
     getUsersByEmail,
-    getUsersByEmailPassword
+    getUsersByEmailPassword,
+    deleteUser,
+    updateRoleUser
 }
 

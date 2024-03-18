@@ -26,4 +26,14 @@ export default class UsersDao {
         const result = await usersModel.findIdAndUpdate(id, user);
         return result;
     }
+    deleteUser = async (id) => {
+        const result = await usersModel.deleteOne({"_id":id});
+        return result;
+    }
+    updateRoleUser = async (id, user) => {
+        let userNuevo = await usersModel.findById(id);      
+        userNuevo.role = user.role; 
+        const result = await usersModel.findByIdAndUpdate( {"_id":id}, userNuevo );
+        return result;
+    }
 }

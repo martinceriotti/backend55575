@@ -9,7 +9,11 @@ const publicAccess = (req, res, next) => {
   next();
 };
 const privateAccess = (req, res, next) => {
-  if (!req.session?.user) return res.redirect("/api/views/login");
+  if (!req.session?.user  ) return res.redirect("/api/views/login");
+  next();
+};
+const adminAccess = (req, res, next) => {
+  if (req.session?.user.role == 'ADMIN') return res.redirect("/api/views/login");
   next();
 };
 
@@ -23,6 +27,12 @@ router.get("/login", publicAccess, (req, res) => {
 
 router.get("/profile", privateAccess, (req, res) => {
   res.render("profile", {
+    user: req.session.user,
+  });
+});
+
+router.get("/delete", adminAccess, (req, res) => {
+  res.render("delete", {
     user: req.session.user,
   });
 });

@@ -1,0 +1,22 @@
+<div>
+  <h1>Login</h1>
+  <form id="deleteForm">
+
+    <h1>Delete or modify Role</h1>
+    <p>{{user.name}}</p>
+    <p>{{user.email}}</p>
+    <p>{{user.age}}</p>
+    <label>id user</label>
+    <input name="_id" value={{user._id}} />
+    <br />
+    <label>Change Role and update</label>
+
+    <input name="role" value={{user.role}} />
+    <div>
+      <input type="submit" name="borrar" value="Delete" />
+      <input type="submit" name="actualizar" value="Update" />
+    </div>
+  </form>
+
+</div>
+<script src="/js/delete.js"></script>

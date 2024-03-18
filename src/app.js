@@ -4,6 +4,7 @@ import cors from 'cors'
 import routerProducts from "./routes/products.router.js";
 import routerCarts from "./routes/carts.router.js";
 import routerMessages from "./routes/messages.router.js";
+import routerUsers from "./routes/users.router.js"
 import handlebars from "express-handlebars";
 import {__dirname, __mainDirname} from "./utils.js";
 import routerViews from "./routes/views.router.js";
@@ -58,6 +59,7 @@ app.use("/api/products", routerProducts);
 app.use("/api/carts", routerCarts);
 app.use("/api/messages", routerMessages);
 app.use("/api/views", routerViews);
+app.use("/api/users", routerUsers);
 app.use('/api/sessions', routerSessions);
 app.use(errorHandler);
 app.use(passport.initialize());

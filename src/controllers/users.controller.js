@@ -28,11 +28,12 @@ const getUsersByEmailPassword = async (req, res) => {
         .status(500)
         .send({ status: "error", message: "user not found" });
     }
-    console.log(user);
     req.session.user = {
       name: `${user.first_name} ${user.last_name}`,
       email: user.email,
       age: user.age,
+      role: user.role,
+      _id: user._id
     };
 
     return res.send({ status: "success", message: "login success" });
@@ -71,4 +72,26 @@ const createUser = async (req, res) => {
   }
 };
 
-export { getUsers, getUsersById, createUser, getUsersByEmailPassword };
+const deleteUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const result = await userService.deleteUser(id);
+    res.send({ status: "success", result });
+  } catch (error) {
+    res.status(500).send({ status: "error", message: error.message });
+  }
+}
+
+const updateRoleUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const role = req.body.role;
+    let user = {"_id": id,
+                "role": role}
+    const result = await userService.updateRoleUser(id, user);
+    res.send({ status: "success", result });
+  } catch (error) {
+    res.status(500).send({ status: "error", message: error.message });
+  }
+}
+export { getUsers, getUsersById, createUser, getUsersByEmailPassword, deleteUser, updateRoleUser };
